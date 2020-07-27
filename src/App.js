@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-import classes from './App.css';
-import Button from './components/UI/Button/Button';
+import Layout from './hoc/Layout/Layout';
+import CompareTool from './containers/CompareTool/CompareTool';
 
-const App = () => {
-  return (
-    <div className={classes.App}>
-      <h1>EV Compare</h1>
-      <p>This is an app where you can compare the lifetime costs of gas cars to electric ones</p>
-      <Button />
-    </div>
-  )
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <Layout>
+          <CompareTool />
+        </Layout>
+      </div>
+    )
+  }
 }
 
 export default App;
