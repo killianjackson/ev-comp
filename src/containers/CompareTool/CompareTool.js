@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
 
-import Input from '../../components/UI/Input/Input';
-//import {updateObject} from '../../shared/utility';
+import Form from '../../components/Form/Form';
+import classes from './CompareTool.css';
 
 class CompareTool extends Component {
-  componentDidMount() {
-    console.log('<CompareTool />');
-  }
-
   state = {
     formIsValid: false,
     formGas: {
@@ -49,34 +45,59 @@ class CompareTool extends Component {
         value: 'Select model',
         valid: false,
       },
+    },
+    formEV: {
+      make: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            {value: 'tesla', displayValue:'Tesla'},
+            {value: 'nissan', displayValue:'Nissan'},
+            {value: 'vw', displayValue:'Volkswagen'},
+          ]
+        },
+        validation: {},
+        value: 'Select make',
+        valid: false,
+      },
+      year: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            {value: '2016', displayValue:'2016'},
+            {value: '2017', displayValue:'2017'},
+            {value: '2018', displayValue:'2018'},
+            {value: '2019', displayValue:'2019'},
+            {value: '2020', displayValue:'2020'},
+          ]
+        },
+        validation: {},
+        value: 'Select year',
+        valid: false,
+      },
+      model: {
+        elementType: 'select',
+        elementConfig: {
+          options: [],
+        },
+        validation: {},
+        value: 'Select model',
+        valid: false,
+      }
     }
   }
 
   render() {
-    const formElementsArray = [];
-    for (let key in this.state.formGas) {
-      formElementsArray.push({
-        id: key,
-        config: this.state.formGas[key]
-      });
-    }
-
-    let form = (
-      <form>
-        {formElementsArray.map(formElement => (
-          <Input
-            key={formElement.id}
-            elementType={formElement.config.elementType}
-            elementConfig={formElement.config.elementConfig}
-            value={formElement.config.value}/>
-        ))}
-      </form>
-    )
-
     return (
-      <div>
-        <h4>Choose a gas vehicle</h4>
-        {form}
+      <div className={classes.CompareTool}>
+        <div className={classes.FormDiv}>
+          <h4>Choose a gas vehicle</h4>
+          <Form form={this.state.formGas} />
+        </div>
+        <div className={classes.FormDiv}>
+          <h4>Choose an electric vehicle</h4>
+          <Form form={this.state.formEV} />
+        </div>
       </div>
     )
   }
