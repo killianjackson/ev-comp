@@ -19,7 +19,8 @@ const form = (props) => {
             key={formElement.id}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
-            value={formElement.config.value}/>
+            value={formElement.config.value}
+            changed={(event) => props.changed(event, props.formId, formElement.id)}/>
         ))}
     </form>
   )

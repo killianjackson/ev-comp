@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import Form from '../../components/Form/Form';
 import classes from './CompareTool.css';
+import {updateObject} from '../../shared/utility';
 
 class CompareTool extends Component {
   state = {
@@ -87,16 +88,34 @@ class CompareTool extends Component {
     }
   }
 
+  inputChangeHandler = (event, formId, inputId) => {
+    const updatedFormElement = updateObject(this.state[formId][inputId], {
+      value: event.target.value,
+    })
+    const updatedForm = updateObject(this.state[formId], {
+      [inputId]: updatedFormElement, 
+    })
+    this.setState({
+      [formId]: updatedForm,
+    })
+  }
+
   render() {
     return (
       <div className={classes.CompareTool}>
         <div className={classes.FormDiv}>
           <h4>Choose a gas vehicle</h4>
-          <Form form={this.state.formGas} />
+          <Form
+            form={this.state.formGas}
+            formId='formGas'
+            changed={this.inputChangeHandler}/>
         </div>
         <div className={classes.FormDiv}>
           <h4>Choose an electric vehicle</h4>
-          <Form form={this.state.formEV} />
+          <Form
+            form={this.state.formEV}
+            formId='formEV'
+            changed={this.inputChangeHandler}/>
         </div>
       </div>
     )
