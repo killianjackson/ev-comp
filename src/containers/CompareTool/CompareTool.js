@@ -3,92 +3,167 @@ import React, {Component} from 'react';
 import Form from '../../components/Form/Form';
 import classes from './CompareTool.css';
 import {updateObject} from '../../shared/utility';
+import axios from '../../axios-instance';
 
 class CompareTool extends Component {
   state = {
+    gasURL: '/gas_car_mpg',
+    evURL: '/ev_car_mpv',
     formIsValid: false,
     formGas: {
-      make: {
-        elementType: 'select',
-        elementConfig: {
-          options: [
-            {value: 'subaru', displayValue:'Subaru'},
-            {value: 'bmw', displayValue:'BMW'},
-            {value: 'audi', displayValue:'Audi'},
-            {value: 'ford', displayValue:'Ford'}
-          ]
-        },
-        validation: {},
-        value: 'Select make',
-        valid: false,
-      },
       year: {
         elementType: 'select',
         elementConfig: {
           options: [
-            {value: '2016', displayValue:'2016'},
-            {value: '2017', displayValue:'2017'},
+            {value: 'select', displayValue:'Select year'},
             {value: '2018', displayValue:'2018'},
             {value: '2019', displayValue:'2019'},
             {value: '2020', displayValue:'2020'},
           ]
         },
         validation: {},
-        value: 'Select year',
+        value: 'select',
+        valid: false,
+      },
+      make: {
+        elementType: 'select',
+        elementConfig: {
+          options: [{value: 'select', displayValue:'Select make'},]
+        },
+        validation: {},
+        value: 'select',
         valid: false,
       },
       model: {
         elementType: 'select',
         elementConfig: {
-          options: [],
+          options: [{value: 'select', displayValue:'Select model'},],
         },
         validation: {},
-        value: 'Select model',
+        value: 'select',
         valid: false,
       },
     },
     formEV: {
-      make: {
-        elementType: 'select',
-        elementConfig: {
-          options: [
-            {value: 'tesla', displayValue:'Tesla'},
-            {value: 'nissan', displayValue:'Nissan'},
-            {value: 'vw', displayValue:'Volkswagen'},
-          ]
-        },
-        validation: {},
-        value: 'Select make',
-        valid: false,
-      },
       year: {
         elementType: 'select',
         elementConfig: {
           options: [
-            {value: '2016', displayValue:'2016'},
-            {value: '2017', displayValue:'2017'},
+            {value: 'select', displayValue:'Select year'},
             {value: '2018', displayValue:'2018'},
             {value: '2019', displayValue:'2019'},
             {value: '2020', displayValue:'2020'},
           ]
         },
         validation: {},
-        value: 'Select year',
+        value: 'select',
+        valid: false,
+      },
+      make: {
+        elementType: 'select',
+        elementConfig: {
+          options: [{value: 'select', displayValue:'Select make'},]
+        },
+        validation: {},
+        value: 'select',
         valid: false,
       },
       model: {
         elementType: 'select',
         elementConfig: {
-          options: [],
+          options: [{value: 'select', displayValue:'Select model'},],
         },
         validation: {},
-        value: 'Select model',
+        value: 'select',
         valid: false,
       }
     }
   }
 
-  inputChangeHandler = (event, formId, inputId) => {
+  fetchSelectData = (formId, inputId, value) => {
+    let url
+    const shallow = '?shallow=true';
+    const suffix = '.json' + shallow
+    switch(formId) {
+      case 'formGas':
+        url = this.state.gasURL;
+        switch(inputId) {
+          case 'year':
+            this.setState({gasURL: url + '/' + value});
+            url = url + '/' + value + suffix;
+            break;
+          case 'make':
+            this.setState({gasURL: url + '/' + value});
+            url = url + '/' + value + suffix;
+            break;
+          case 'model':
+            this.setState({gasURL: url + '/' + value});
+            url = url + '/' + value + '.json';
+            break;
+          default: break;
+        }
+        break;
+      case 'formEV':
+        url = this.state.evURL;
+        switch(inputId) {
+          case 'year':
+            this.setState({evURL: url + '/' + value});
+            url = url + '/' + value + suffix;
+            break;
+          case 'make':
+            this.setState({evURL: url + '/' + value});
+            url = url + '/' + value + suffix;
+            break;
+          case 'model':
+            this.setState({evURL: url + '/' + value});
+            url = url + '/' + value + '.json';
+            break;
+          default: break;
+        }
+        break;
+      default: break;
+    }
+    axios.get(url)
+      .then(res => {
+        this.updateOptions(res.data, formId, inputId);
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  updateOptions = (data, formId, inputId) => {
+    let nextInputId;
+    switch(inputId) {
+      case 'year': nextInputId = 'make'; break;
+      case 'make': nextInputId = 'model'; break;
+      default: break;
+    }
+
+    let fetchedOptions = Object.keys(data).map(key => {
+      return {value: key, displayValue: key}
+    })
+
+    let updatedOptions = [
+      ...this.state[formId][nextInputId]['elementConfig']['options'],
+      ...fetchedOptions,
+    ];
+
+    const updatedFormElementConfig = updateObject(this.state[formId][nextInputId]['elementConfig'], {
+      options: updatedOptions
+    })
+    const updatedFormElement = updateObject(this.state[formId][nextInputId], {
+      elementConfig: updatedFormElementConfig,
+    }) 
+    const updatedForm = updateObject(this.state[formId], {
+      [nextInputId]: updatedFormElement, 
+    })
+    this.setState({
+      [formId]: updatedForm,
+    })
+  }
+
+  inputChangeHandler = (event, formId, inputId, nextInputId) => {
     const updatedFormElement = updateObject(this.state[formId][inputId], {
       value: event.target.value,
     })
@@ -98,6 +173,7 @@ class CompareTool extends Component {
     this.setState({
       [formId]: updatedForm,
     })
+    this.fetchSelectData(formId, inputId, event.target.value);
   }
 
   render() {
