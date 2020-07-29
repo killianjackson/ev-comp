@@ -7,8 +7,10 @@ import axios from '../../axios-instance';
 
 class CompareTool extends Component {
   state = {
-    gasURL: '/gas_car_mpg',
-    evURL: '/ev_car_mpv',
+    gasURL: ['/gas_car_mpg'],
+    evURL: ['/ev_car_mpv'],
+    gasMPG: null,
+    evMPV: null,
     formIsValid: false,
     formGas: {
       year: {
@@ -86,46 +88,55 @@ class CompareTool extends Component {
     const suffix = '.json' + shallow
     switch(formId) {
       case 'formGas':
-        url = this.state.gasURL;
+        const gasUrl = this.state.gasURL;
         switch(inputId) {
           case 'year':
-            this.setState({gasURL: url + '/' + value});
-            url = url + '/' + value + suffix;
+            this.setState({gasURL: [...gasUrl, value]});
+            url = gasUrl.join('/') + '/' + value + suffix;
             break;
           case 'make':
-            this.setState({gasURL: url + '/' + value});
-            url = url + '/' + value + suffix;
+            this.setState({gasURL: [...gasUrl, value]});
+            url = gasUrl.join('/') + '/' + value + suffix;
             break;
           case 'model':
-            this.setState({gasURL: url + '/' + value});
-            url = url + '/' + value + '.json';
+            this.setState({gasURL: [...gasUrl, value]});
+            url = gasUrl.join('/') + '/' + value + '.json';
             break;
           default: break;
         }
         break;
       case 'formEV':
-        url = this.state.evURL;
+        const evUrl = this.state.evURL;
         switch(inputId) {
           case 'year':
-            this.setState({evURL: url + '/' + value});
-            url = url + '/' + value + suffix;
+            this.setState({evURL: [...evUrl, value]});
+            url = evUrl.join('/') + '/' + value + suffix;
             break;
           case 'make':
-            this.setState({evURL: url + '/' + value});
-            url = url + '/' + value + suffix;
+            this.setState({evURL: [...evUrl, value]});
+            url = evUrl.join('/') + '/' + value + suffix;
             break;
           case 'model':
-            this.setState({evURL: url + '/' + value});
-            url = url + '/' + value + '.json';
+            this.setState({evURL: [...evUrl, value]});
+            url = evUrl.join('/') + '/' + value + '.json';
             break;
           default: break;
         }
         break;
       default: break;
     }
+
     axios.get(url)
       .then(res => {
-        this.updateOptions(res.data, formId, inputId);
+        if (inputId === 'model') {
+          switch(formId){
+            case ('formGas'): this.setState({gasMPG: res.data}); break;
+            case ('formEV'): this.setState({evMPV: res.data}); break;
+            default: break;
+          }
+        } else {
+          this.updateOptions(res.data, formId, inputId);
+        }
       })
       .catch(error => {
         console.log(error)
@@ -177,6 +188,15 @@ class CompareTool extends Component {
   }
 
   render() {
+    let gasMPG = null;
+    let evMPV = null;
+    if(this.state.gasMPG) {
+      gasMPG = (<h1>{this.state.gasMPG} MPG</h1>);
+    }
+    if (this.state.evMPV) {
+      evMPV = (<h1>{this.state.evMPV} MPV</h1>);
+    }
+
     return (
       <div className={classes.CompareTool}>
         <div className={classes.FormDiv}>
@@ -185,6 +205,7 @@ class CompareTool extends Component {
             form={this.state.formGas}
             formId='formGas'
             changed={this.inputChangeHandler}/>
+          {gasMPG}
         </div>
         <div className={classes.FormDiv}>
           <h4>Choose an electric vehicle</h4>
@@ -192,6 +213,7 @@ class CompareTool extends Component {
             form={this.state.formEV}
             formId='formEV'
             changed={this.inputChangeHandler}/>
+          {evMPV}
         </div>
       </div>
     )

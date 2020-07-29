@@ -20,6 +20,7 @@ const form = (props) => {
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
+            label={formElement.id}
             changed={(event) => props.changed(event, props.formId, formElement.id)}/>
         ))}
     </form>
