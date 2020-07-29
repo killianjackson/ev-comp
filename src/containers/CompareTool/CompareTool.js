@@ -5,6 +5,7 @@ import classes from './CompareTool.css';
 import {updateObject} from '../../shared/utility';
 import axios from '../../axios-instance';
 import Data from '../../components/Data/Data';
+import Chart from '../../components/UI/Chart/Chart';
 
 class CompareTool extends Component {
   state = {
@@ -204,6 +205,22 @@ class CompareTool extends Component {
     this.fetchSelectData(formId, inputId, event.target.value);
   }
 
+  calculateChartData = (efficiency, energry_cost, msrp, maintenance) => {
+    let i;
+    let chartData = [];
+    let y = msrp;
+    for(i = 0; i < 10; i++) {
+      if (i > 0) {
+        y += (((1/efficiency) * energry_cost * 10000) + maintenance);
+      }
+      chartData.push({
+        x: i,
+        y: parseFloat(y.toFixed(2)),
+      });
+    }
+    return chartData;
+  }
+
   render() {
     let gasData = null;
     let evData = null;
@@ -218,6 +235,9 @@ class CompareTool extends Component {
     const evMSRP = 40000;
     const evM = 200;
     ////////////////////////
+
+    let lineGasData = null;
+    let lineEVData = null;
 
     if(this.state.gasMPG) {
       gasData = <Data 
@@ -234,6 +254,13 @@ class CompareTool extends Component {
         msrp={evMSRP}
         maintenance={evM}
         fuelUnit='kWh'/>;
+    }
+
+    let chart = null;
+    if (this.state.gasMPG && this.state.evkWh) {
+      lineGasData = this.calculateChartData(this.state.gasMPG, gasEC, gasMSRP, gasM);
+      lineEVData = this.calculateChartData(this.state.evkWh, evEC, evMSRP, evM);
+      chart = <Chart lineGasData={lineGasData} lineEVData={lineEVData}/>
     }
 
     return (
@@ -254,6 +281,7 @@ class CompareTool extends Component {
             changed={this.inputChangeHandler}/>
           {evData}
         </div>
+        {chart}
       </div>
     )
   }
