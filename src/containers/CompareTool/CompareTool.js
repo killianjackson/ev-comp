@@ -4,13 +4,14 @@ import Form from '../../components/Form/Form';
 import classes from './CompareTool.css';
 import {updateObject} from '../../shared/utility';
 import axios from '../../axios-instance';
+import Data from '../../components/Data/Data';
 
 class CompareTool extends Component {
   state = {
     gasURL: ['/gas_car_mpg'],
     evURL: ['/ev_car_mpv'],
     gasMPG: null,
-    evMPV: null,
+    evkWh: null,
     formIsValid: false,
     formGas: {
       year: {
@@ -137,7 +138,7 @@ class CompareTool extends Component {
         if (inputId === 'model') {
           switch(formId){
             case ('formGas'): this.setState({gasMPG: res.data}); break;
-            case ('formEV'): this.setState({evMPV: res.data}); break;
+            case ('formEV'): this.setState({evkWh: res.data}); break;
             default: break;
           }
         } else {
@@ -184,7 +185,7 @@ class CompareTool extends Component {
       } else if(formId === 'formEV') {
         this.setState({
           [formId]: updatedForm,
-          evMPV: null,
+          evkWh: null,
         })
       }
     }) 
@@ -204,13 +205,35 @@ class CompareTool extends Component {
   }
 
   render() {
-    let gasMPG = null;
-    let evMPV = null;
+    let gasData = null;
+    let evData = null;
+
+    // Dummy data for now //
+    const gasEC = 3.5;
+    const gasMSRP = 30000;
+    const gasM = 1000;
+
+    
+    const evEC = .15
+    const evMSRP = 40000;
+    const evM = 200;
+    ////////////////////////
+
     if(this.state.gasMPG) {
-      gasMPG = (<h1>{this.state.gasMPG} MPG</h1>);
+      gasData = <Data 
+        efficiency={this.state.gasMPG}
+        energry_cost={gasEC}
+        msrp={gasMSRP}
+        maintenance={gasM}
+        fuelUnit='gallon'/>;
     }
-    if (this.state.evMPV) {
-      evMPV = (<h1>{this.state.evMPV} MPV</h1>);
+    if (this.state.evkWh) {
+      evData = <Data 
+        efficiency={this.state.evkWh}
+        energry_cost={evEC}
+        msrp={evMSRP}
+        maintenance={evM}
+        fuelUnit='kWh'/>;
     }
 
     return (
@@ -221,7 +244,7 @@ class CompareTool extends Component {
             form={this.state.formGas}
             formId='formGas'
             changed={this.inputChangeHandler}/>
-          {gasMPG}
+          {gasData}
         </div>
         <div className={classes.FormDiv}>
           <h4>Choose an electric vehicle</h4>
@@ -229,7 +252,7 @@ class CompareTool extends Component {
             form={this.state.formEV}
             formId='formEV'
             changed={this.inputChangeHandler}/>
-          {evMPV}
+          {evData}
         </div>
       </div>
     )
