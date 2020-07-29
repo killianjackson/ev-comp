@@ -88,17 +88,20 @@ class CompareTool extends Component {
     const suffix = '.json' + shallow
     switch(formId) {
       case 'formGas':
-        const gasUrl = this.state.gasURL;
+        let gasUrl = this.state.gasURL;
         switch(inputId) {
           case 'year':
+            gasUrl = gasUrl.slice(0,1);
             this.setState({gasURL: [...gasUrl, value]});
             url = gasUrl.join('/') + '/' + value + suffix;
             break;
           case 'make':
+            gasUrl = gasUrl.slice(0,2);
             this.setState({gasURL: [...gasUrl, value]});
             url = gasUrl.join('/') + '/' + value + suffix;
             break;
           case 'model':
+            gasUrl = gasUrl.slice(0,3);
             this.setState({gasURL: [...gasUrl, value]});
             url = gasUrl.join('/') + '/' + value + '.json';
             break;
@@ -106,17 +109,20 @@ class CompareTool extends Component {
         }
         break;
       case 'formEV':
-        const evUrl = this.state.evURL;
+        let evUrl = this.state.evURL;
         switch(inputId) {
           case 'year':
+            evUrl = evUrl.slice(0,1);
             this.setState({evURL: [...evUrl, value]});
             url = evUrl.join('/') + '/' + value + suffix;
             break;
           case 'make':
+            evUrl = evUrl.slice(0,2)
             this.setState({evURL: [...evUrl, value]});
             url = evUrl.join('/') + '/' + value + suffix;
             break;
           case 'model':
+            evUrl = evUrl.slice(0,3);
             this.setState({evURL: [...evUrl, value]});
             url = evUrl.join('/') + '/' + value + '.json';
             break;
@@ -144,10 +150,10 @@ class CompareTool extends Component {
   }
 
   updateOptions = (data, formId, inputId) => {
-    let nextInputId;
+    let nextInputIds;
     switch(inputId) {
-      case 'year': nextInputId = 'make'; break;
-      case 'make': nextInputId = 'model'; break;
+      case 'year': nextInputIds = ['make','model']; break;
+      case 'make': nextInputIds = ['model']; break;
       default: break;
     }
 
@@ -155,23 +161,33 @@ class CompareTool extends Component {
       return {value: key, displayValue: key}
     })
 
-    let updatedOptions = [
-      ...this.state[formId][nextInputId]['elementConfig']['options'],
-      ...fetchedOptions,
-    ];
-
-    const updatedFormElementConfig = updateObject(this.state[formId][nextInputId]['elementConfig'], {
-      options: updatedOptions
-    })
-    const updatedFormElement = updateObject(this.state[formId][nextInputId], {
-      elementConfig: updatedFormElementConfig,
+    nextInputIds.forEach(nextInputId => {
+      let updatedOptions = [
+        ...this.state[formId][nextInputId]['elementConfig']['options'].slice(0,1),
+        ...fetchedOptions,
+      ];
+      const updatedFormElementConfig = updateObject(this.state[formId][nextInputId]['elementConfig'], {
+        options: updatedOptions
+      })
+      const updatedFormElement = updateObject(this.state[formId][nextInputId], {
+        elementConfig: updatedFormElementConfig,
+        value: 'select',
+      })
+      const updatedForm = updateObject(this.state[formId], {
+        [nextInputId]: updatedFormElement, 
+      })
+      if(formId === 'formGas') {
+        this.setState({
+          [formId]: updatedForm,
+          gasMPG: null,
+        })
+      } else if(formId === 'formEV') {
+        this.setState({
+          [formId]: updatedForm,
+          evMPV: null,
+        })
+      }
     }) 
-    const updatedForm = updateObject(this.state[formId], {
-      [nextInputId]: updatedFormElement, 
-    })
-    this.setState({
-      [formId]: updatedForm,
-    })
   }
 
   inputChangeHandler = (event, formId, inputId, nextInputId) => {
