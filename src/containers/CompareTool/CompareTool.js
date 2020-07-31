@@ -241,20 +241,29 @@ class CompareTool extends Component {
     let lineEVData = null;
 
     if(this.state.gasMPG) {
-      gasData = <Data 
+      let names = [this.state.formGas.year.value, this.state.formGas.make.value, this.state.formGas.model.value];
+      let dataLabel = names.join(' ');
+      gasData = <Data
+        dataLabel={dataLabel} 
         efficiency={this.state.gasMPG}
         energry_cost={gasEC}
         msrp={gasMSRP}
         maintenance={gasM}
-        fuelUnit='gallon'/>;
+        fuelUnit='gal'
+        ratingUnit='MPG'/>;
     }
     if (this.state.evkWh) {
-      evData = <Data 
+      let names = [this.state.formEV.year.value, this.state.formEV.make.value, this.state.formEV.model.value];
+      let dataLabel = names.join(' ');
+      evData = <Data
+        dataLabel={dataLabel}
         efficiency={this.state.evkWh}
         energry_cost={evEC}
         msrp={evMSRP}
         maintenance={evM}
-        fuelUnit='kWh'/>;
+        fuelUnit='kWh'
+        ratingUnit='MPKWH'/>;
+
     }
 
     let chart = null;

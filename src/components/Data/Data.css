@@ -5,7 +5,7 @@
   border-radius: 10px;
   display: inline-block;
   width: 48%;
-  text-align: center;
+  text-align: left;
   margin-right: 2%;
 }
 
@@ -16,38 +16,29 @@
   border-radius: 10px;
   display: inline-block;
   width: 48%;
-  text-align: center;
+  text-align: left;
   margin-left: 2%;
 }
 
-.Eff {
+.Gas {
   color: #DB4437;
-  font-size: large;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-.EC {
-  color: #0F9D58;
-  font-size: large;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.MSRP {
+.EV {
   color: #4285F4;
   font-size: large;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-.M {
-  color: #4285F4;
-  text-align: left;
+.Efficiency {
+  font-size: xx-large;
 }
 
-.MPY {
-  color: #4285F4;
-  text-align: left;
+.h1 {
+  text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
 }
-

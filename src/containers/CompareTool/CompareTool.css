@@ -6,7 +6,7 @@
   box-shadow: 0 2px 3px #ccc;
   border: 1px solid #eee;
   width: 80%;
-  max-width: 500px;
+  max-width: 600px;
   border-radius: 10px;
 }
 
@@ -20,7 +20,7 @@
   text-align: center;
   box-sizing: border-box;
   width: 80%;
-  max-width: 500px;
+  max-width: 600px;
   margin: 20px auto;
 }
 
@@ -28,6 +28,6 @@
   text-align: center;
   box-sizing: border-box;
   width: 80%;
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
 }
