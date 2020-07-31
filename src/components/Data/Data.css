@@ -1,20 +1,44 @@
-.Data {
-  text-align: left;
+.DataLeft {
+  box-sizing: border-box;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  display: inline-block;
+  width: 48%;
+  text-align: center;
+  margin-right: 2%;
+}
+
+.DataRight {
+  box-sizing: border-box;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  display: inline-block;
+  width: 48%;
+  text-align: center;
+  margin-left: 2%;
 }
 
 .Eff {
-  color: #4285F4;
-  text-align: left;
+  color: #DB4437;
+  font-size: large;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .EC {
-  color: #4285F4;
-  text-align: left;
+  color: #0F9D58;
+  font-size: large;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .MSRP {
   color: #4285F4;
-  text-align: left;
+  font-size: large;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .M {

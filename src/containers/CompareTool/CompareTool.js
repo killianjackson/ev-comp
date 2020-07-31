@@ -6,6 +6,7 @@ import {updateObject} from '../../shared/utility';
 import axios from '../../axios-instance';
 import Data from '../../components/Data/Data';
 import Chart from '../../components/UI/Chart/Chart';
+import Aux from '../../hoc/Aux/Aux';
 
 class CompareTool extends Component {
   state = {
@@ -264,25 +265,31 @@ class CompareTool extends Component {
     }
 
     return (
-      <div className={classes.CompareTool}>
-        <div className={classes.FormDiv}>
-          <h4>Choose a gas vehicle</h4>
-          <Form
-            form={this.state.formGas}
-            formId='formGas'
-            changed={this.inputChangeHandler}/>
-          {gasData}
+      <Aux>
+        <div className={classes.CompareTool}>
+          <div className={classes.FormDiv}>
+            <h4>Choose a gas vehicle</h4>
+            <Form
+              form={this.state.formGas}
+              formId='formGas'
+              changed={this.inputChangeHandler}/>
+          </div>
+          <div className={classes.FormDiv}>
+            <h4>Choose an electric vehicle</h4>
+            <Form
+              form={this.state.formEV}
+              formId='formEV'
+              changed={this.inputChangeHandler}/>
+          </div>
         </div>
-        <div className={classes.FormDiv}>
-          <h4>Choose an electric vehicle</h4>
-          <Form
-            form={this.state.formEV}
-            formId='formEV'
-            changed={this.inputChangeHandler}/>
+        <div className={classes.DataDiv}>
+          {gasData}
           {evData}
         </div>
-        {chart}
-      </div>
+        <div className={classes.ChartDiv}>
+          {chart}
+        </div>
+      </Aux>
     )
   }
 }

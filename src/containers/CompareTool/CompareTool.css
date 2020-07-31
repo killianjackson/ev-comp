@@ -2,12 +2,32 @@
   padding: 10px;
   box-sizing: border-box;
   margin: 20px auto;
-  width: 80%;
   text-align: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
 }
 
 .FormDiv {
   display: inline-block;
   text-align: left;    
   padding: 2%;
+}
+
+.DataDiv {
+  text-align: center;
+  box-sizing: border-box;
+  width: 80%;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.ChartDiv {
+  text-align: center;
+  box-sizing: border-box;
+  width: 80%;
+  max-width: 500px;
+  margin: auto;
 }
