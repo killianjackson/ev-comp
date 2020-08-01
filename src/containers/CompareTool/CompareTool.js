@@ -206,22 +206,6 @@ class CompareTool extends Component {
     this.fetchSelectData(formId, inputId, event.target.value);
   }
 
-  calculateChartData = (efficiency, energry_cost, msrp, maintenance) => {
-    let i;
-    let chartData = [];
-    let y = msrp;
-    for(i = 0; i < 10; i++) {
-      if (i > 0) {
-        y += (((1/efficiency) * energry_cost * 10000) + maintenance);
-      }
-      chartData.push({
-        x: i,
-        y: parseFloat(y.toFixed(2)),
-      });
-    }
-    return chartData;
-  }
-
   render() {
     let gasData = null;
     let evData = null;
@@ -237,16 +221,16 @@ class CompareTool extends Component {
     const evM = 200;
     ////////////////////////
 
-    let lineGasData = null;
-    let lineEVData = null;
+    let gasName = '';
+    let evName = '';
 
     if(this.state.gasMPG) {
       let names = [this.state.formGas.year.value, this.state.formGas.make.value, this.state.formGas.model.value];
-      let dataLabel = names.join(' ');
+      gasName = names.join(' ');
       gasData = <Data
-        dataLabel={dataLabel} 
+        dataLabel={gasName} 
         efficiency={this.state.gasMPG}
-        energry_cost={gasEC}
+        energryCost={gasEC}
         msrp={gasMSRP}
         maintenance={gasM}
         fuelUnit='gal'
@@ -254,22 +238,26 @@ class CompareTool extends Component {
     }
     if (this.state.evkWh) {
       let names = [this.state.formEV.year.value, this.state.formEV.make.value, this.state.formEV.model.value];
-      let dataLabel = names.join(' ');
+      evName = names.join(' ');
       evData = <Data
-        dataLabel={dataLabel}
+        dataLabel={evName}
         efficiency={this.state.evkWh}
-        energry_cost={evEC}
+        energryCost={evEC}
         msrp={evMSRP}
         maintenance={evM}
         fuelUnit='kWh'
         ratingUnit='MPKWH'/>;
     }
 
-    let chart = <Chart />;
+    let chart = null;
     if (this.state.gasMPG && this.state.evkWh) {
-      lineGasData = this.calculateChartData(this.state.gasMPG, gasEC, gasMSRP, gasM);
-      lineEVData = this.calculateChartData(this.state.evkWh, evEC, evMSRP, evM);
-      chart = <Chart lineGasData={lineGasData} lineEVData={lineEVData}/>
+      let gasChartData = { efficiency: this.state.gasMPG, energyCost: gasEC, msrp: gasMSRP, maintenance: gasM, name: gasName };
+      let evChartData = { efficiency: this.state.evkWh, energyCost: evEC, msrp: evMSRP, maintenance: evM, name: evName };
+      chart = (
+        <div className={classes.ChartDiv}>
+          <Chart gasChartData={gasChartData} evChartData={evChartData}/>
+        </div>
+      );
     }
 
     return (
@@ -294,9 +282,7 @@ class CompareTool extends Component {
           {gasData}
           {evData}
         </div>
-        <div className={classes.ChartDiv}>
           {chart}
-        </div>
       </Aux>
     )
   }

@@ -23,7 +23,7 @@ const data = (props) => {
         <span className={classes.Efficiency}><strong>{props.efficiency}</strong></span> {props.ratingUnit}
       </p>
       <p className={pClass}>
-        <span className={classes.Efficiency}><strong>${props.energry_cost}</strong></span> /{props.fuelUnit}
+        <span className={classes.Efficiency}><strong>${props.energryCost}</strong></span> /{props.fuelUnit}
       </p>
       <p className={pClass}>
         <span className={classes.Efficiency}><strong>${props.maintenance}</strong></span> approx. maintenance cost per year
