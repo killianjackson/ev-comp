@@ -263,10 +263,9 @@ class CompareTool extends Component {
         maintenance={evM}
         fuelUnit='kWh'
         ratingUnit='MPKWH'/>;
-
     }
 
-    let chart = null;
+    let chart = <Chart />;
     if (this.state.gasMPG && this.state.evkWh) {
       lineGasData = this.calculateChartData(this.state.gasMPG, gasEC, gasMSRP, gasM);
       lineEVData = this.calculateChartData(this.state.evkWh, evEC, evMSRP, evM);

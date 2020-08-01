@@ -17,13 +17,16 @@ const data = (props) => {
     <div className={divClass}>
       <h1 className={classes.h1}>{props.dataLabel}</h1>
       <p className={pClass}>
-        <span className={classes.Efficiency}><strong>${props.msrp}</strong></span>MSRP
+        <span className={classes.Efficiency}><strong>${props.msrp}</strong></span> MSRP
       </p>
       <p className={pClass}>
-        <span className={classes.Efficiency}><strong>{props.efficiency}</strong></span>{props.ratingUnit}
+        <span className={classes.Efficiency}><strong>{props.efficiency}</strong></span> {props.ratingUnit}
       </p>
       <p className={pClass}>
-        <span className={classes.Efficiency}><strong>${props.energry_cost}</strong></span>/{props.fuelUnit}
+        <span className={classes.Efficiency}><strong>${props.energry_cost}</strong></span> /{props.fuelUnit}
+      </p>
+      <p className={pClass}>
+        <span className={classes.Efficiency}><strong>${props.maintenance}</strong></span> approx. maintenance cost per year
       </p>
     </div>
   );

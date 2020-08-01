@@ -1,33 +1,46 @@
 import React from 'react';
-import {VictoryChart, VictoryLine} from 'victory';
+import {VictoryChart, VictoryGroup, VictoryStack, VictoryBar, VictoryLabel, VictoryTooltip} from 'victory';
 import materialTheme from './material';
 
 import classes from './Chart.css';
 
 const chart = (props) => {
+  let gasData = [
+    [{x: 'Audi', y: 1}],
+    [{x: 'Audi', y: 2}],
+    [{x: 'Audi', y: 3}] 
+  ];
+
+  let evData = [
+    [{x: 'Tesla', y: 6}],
+    [{x: 'Tesla', y: 3}],
+    [{x: 'Tesla', y: 2}]
+  ];
+
   return (
     <div className={classes.Chart}>
-      <VictoryChart
-        theme={materialTheme}
+      <VictoryGroup
+        horizontal
         animate={{duration: 1000}}
-        height={200}
-        width={400}
+        height={170}
+        width={450}
+        offset={5} style={{ data: { width: 50 } }}
       >
-        <VictoryLine
-          style={{
-            data: { stroke: "#c43a31" },
-            parent: { border: "1px solid #ccc"}
-          }}
-          data={props.lineGasData}
-        />
-        <VictoryLine
-          style={{
-            data: { stroke: "#4285F4" },
-            parent: { border: "1px solid #ccc"}
-          }}
-          data={props.lineEVData}
-        />
-      </VictoryChart>
+        <VictoryStack colorScale={"blue"} labels={['$50,000']}>
+          {evData.map((data, index) => {
+            return <VictoryBar
+              key={index}
+              data={data}/>;
+          })}
+        </VictoryStack>
+        <VictoryStack colorScale={"red"}labels={['$50,000']}>
+          {gasData.map((data, index) => {
+            return <VictoryBar
+              key={index}
+              data={data}/>;
+          })}
+        </VictoryStack>
+      </VictoryGroup>
     </div>
   );
 }
