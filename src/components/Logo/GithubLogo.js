@@ -1,11 +1,11 @@
 import React from 'react';
 
-import boltLogo from '../../assets/images/bolt.png';
+import githubLogo from '../../assets/images/github.png';
 import classes from './Logo.css';
 
-const logo = (props) => (
+const logo = () => (
   <div className={classes.Logo}>
-    <img src={boltLogo} alt='Bolt'/>
+    <img src={githubLogo} alt='github'/>
   </div>
 );
 
