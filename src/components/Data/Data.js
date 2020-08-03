@@ -1,6 +1,7 @@
 import React from 'react';
 
 import classes from './Data.css';
+import {dollarFormatter} from '../../shared/utility';
 
 const data = (props) => {
   let pClass;
@@ -17,16 +18,16 @@ const data = (props) => {
     <div className={divClass}>
       <h1 className={classes.h1}>{props.dataLabel}</h1>
       <p className={pClass}>
-        <span className={classes.Efficiency}><strong>${props.msrp}</strong></span> MSRP
+        <span className={classes.Efficiency}><strong>{dollarFormatter(props.msrp)}</strong></span> MSRP
       </p>
       <p className={pClass}>
         <span className={classes.Efficiency}><strong>{props.efficiency}</strong></span> {props.ratingUnit}
       </p>
       <p className={pClass}>
-        <span className={classes.Efficiency}><strong>${props.energryCost}</strong></span> /{props.fuelUnit}
+        <span className={classes.Efficiency}><strong>{dollarFormatter(props.energryCost)}</strong></span> /{props.fuelUnit}
       </p>
       <p className={pClass}>
-        <span className={classes.Efficiency}><strong>${props.maintenance}</strong></span> approx. maintenance cost per year
+        <span className={classes.Efficiency}><strong>{dollarFormatter(props.maintenance)}</strong></span> approx. maintenance cost per year
       </p>
     </div>
   );
