@@ -169,6 +169,9 @@ class CompareTool extends Component {
         ...this.state[formId][nextInputId]['elementConfig']['options'].slice(0,1),
         ...fetchedOptions,
       ];
+
+      fetchedOptions = null;
+
       const updatedFormElementConfig = updateObject(this.state[formId][nextInputId]['elementConfig'], {
         options: updatedOptions
       })
