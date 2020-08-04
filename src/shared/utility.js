@@ -12,3 +12,7 @@ export const dollarFormatter = (value) => {
     return '$' + value.toFixed(2).toLocaleString();
   }
 };
+
+export const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

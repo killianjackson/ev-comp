@@ -1,6 +1,7 @@
 import React from 'react';
 
 import classes from './Input.css';
+import {capitalizeFirstLetter} from '../../../shared/utility';
 
 const input = (props) => {
   let inputElement = null;
@@ -32,7 +33,7 @@ const input = (props) => {
   }
   return (
     <div className={classes.Input}>
-      <label className={classes.Label}>{props.label}</label>
+      <label className={classes.Label}>{capitalizeFirstLetter(props.label)}</label>
       {inputElement}
     </div>
   )

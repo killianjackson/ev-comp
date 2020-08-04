@@ -1,6 +1,13 @@
 import React from 'react';
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, Legend, LabelList, ResponsiveContainer
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  LabelList,
+  ResponsiveContainer
 } from 'recharts';
 import Aux from '../../../hoc/Aux/Aux';
 import {dollarFormatter} from '../../../shared/utility';
@@ -10,7 +17,6 @@ const calculateChartData = (data) => {
   const msrp = data.msrp;
   const main = (data.maintenance * 5);
   const fuelC = parseFloat(((1/data.efficiency) * data.energyCost * 15000).toFixed(2));
-  console.log(msrp,main,fuelC);
   const total = msrp + main + fuelC;
 
   return {
@@ -34,7 +40,6 @@ const chart = (props) => {
   const gasChartData = calculateChartData(props.gasChartData);
   const evChartData = calculateChartData(props.evChartData);
   const xAxisDomain = Math.max((gasChartData.total),(evChartData.total));
-  console.log(xAxisDomain);
   return (
     <Aux>
       <h1>5 Year Cost Comparison</h1>
