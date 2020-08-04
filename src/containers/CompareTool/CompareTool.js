@@ -215,7 +215,7 @@ class CompareTool extends Component {
 
     // Dummy data for now //
     const gasEC = 3.5;
-    const gasMSRP = 30000;
+    const gasMSRP = 40000;
     const gasM = 1000;
 
     
@@ -267,19 +267,20 @@ class CompareTool extends Component {
       <Aux>
         <div className={classes.CompareTool}>
           <div className={classes.FormDiv}>
-            <h4>Choose a gas vehicle</h4>
+            <h3>Choose a gas vehicle</h3>
             <Form
               form={this.state.formGas}
               formId='formGas'
               changed={this.inputChangeHandler}/>
           </div>
           <div className={classes.FormDiv}>
-            <h4>Choose an electric vehicle</h4>
+            <h3>Choose an electric vehicle</h3>
             <Form
               form={this.state.formEV}
               formId='formEV'
               changed={this.inputChangeHandler}/>
           </div>
+          <p><strong>*</strong>Using dummy data at the moment. Full, accurate dataset is in progress</p>
         </div>
         <div className={classes.DataDiv}>
           {gasData}
