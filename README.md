@@ -9,13 +9,10 @@ A production build of the application is viewable at https://evcompare-89110.web
 ## Screenshots
 
 ### Vehicle Selection Form
-![vehicle_select_form]
-(https://github.com/killianjackson/ev-comp/blob/master/src/assets/images/form.png)
+![vehicle_select_form](https://github.com/killianjackson/ev-comp/blob/master/src/assets/images/form.png)
 
 ### Data Cards and Graph
-![cards_and_graph]
-(https://github.com/killianjackson/ev-comp/blob/master/src/assets/images/data_cards_with_graph.png)
+![cards_and_graph](https://github.com/killianjackson/ev-comp/blob/master/src/assets/images/data_cards_with_graph.png)
 
 ### Graph with Tooltip
-![graph_tooltip]
-(https://github.com/killianjackson/ev-comp/blob/master/src/assets/images/graph_tooltip.png)
+![graph_tooltip](https://github.com/killianjackson/ev-comp/blob/master/src/assets/images/graph_tooltip.png)
